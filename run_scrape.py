@@ -304,7 +304,7 @@ class Scrape:
 
         """ grab all html a tags
             append them to a list [text, href]
-            using: webdriver/selenium
+            : Webdriver
         """
 
         try:
@@ -331,7 +331,7 @@ class Scrape:
 
         """ grab all links - html tag name a
             save them as a list [text, href]
-            using: soup
+            : BeautifulSoup (non js sites)
         """
 
         links_ = []
@@ -354,6 +354,11 @@ class Scrape:
             logger.info('Add row: {} to file: {}'.format(row, self.csv_file))
 
     def tear_down(self):
+
+        """
+        Tear down after the core part of the script finishes
+        Quits webdriver and display
+        """
         if self.driver:
             self.driver.quit()
         if self.display:
@@ -361,7 +366,16 @@ class Scrape:
 
     @staticmethod
     def _apply_lookahead(source_, ahead_word):
-        # case insensitive
+
+        """
+        Search for a word (or characters) and return true
+        if match is found.
+        :param source_: string to search on (link text)
+        :param ahead_word: characters to search on a source string
+        :return:
+        """
+
+        # case insensitive pattern
         regex_ = r"(?i)(?={})".format(ahead_word)
         comp_ = re.compile(regex_)
         match_ = comp_.search(source_)
@@ -372,7 +386,16 @@ class Scrape:
 
     @staticmethod
     def _apply_negative_lookahead(source_, ahead_word):
-        # case insensitive
+
+        """
+        Search for a word (or characters) and return true
+        if match is not found.
+        :param source_: string to search on (link text)
+        :param ahead_word: characters to search on a source string
+        :return:
+        """
+
+        # case insensitive pattern
         regex_ = r"(?i)^((?!{}).)*$".format(ahead_word)
         comp_ = re.compile(regex_)
         match_ = comp_.search(source_)
@@ -384,12 +407,8 @@ class Scrape:
 
 if __name__ == '__main__':
 
-    # timestamp = time.strftime('%d%m%y', time.localtime())  # comment in for production
-    # log = 'logs'
-    timestamp = ''
-    log = ''
-    log_file = os.path.join(os.path.dirname(__file__), log,
-                            timestamp + "_scraper.log")
+    timestamp = time.strftime('%d%m%y', time.localtime())
+    log_file = os.path.join(os.path.dirname(__file__), 'logs', timestamp + ".log")
     file_hndlr = logging.FileHandler(log_file)
     logger.addHandler(file_hndlr)
     console = logging.StreamHandler(stream=sys.stdout)
@@ -413,10 +432,11 @@ if __name__ == '__main__':
     scrape = Scrape(site_url, browser)
     scrape.scrape()
 
-    # --follow: fow far to follow links
+    # --follow: how far to follow links
     # e.g follow = 2, grab links from the page
-    # and open them (1), grab links from all pages
-    # that were opened (1) and open them up (2)
+    # and open them, grab links from all pages
+    # that were opened (follow=1) and open them up
+    # and scrape matching links (follow=2)
     for counter in range(arg_dict['follow']):
         scrape.crawl()
 
