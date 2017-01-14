@@ -88,7 +88,7 @@ class Scrape:
                 try:
                     self.driver.get(url)
                 except TimeoutException:
-                    logging.warning('crawl driver get timed out on page: {}'.format(url))
+                    logger.warning('crawl driver get timed out on page: {}'.format(url))
                     continue
                 except:
                     logger.error('crawl error', exc_info=True)
