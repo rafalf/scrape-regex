@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from pyvirtualdisplay import Display
@@ -90,6 +91,8 @@ class Scrape:
                 except TimeoutException:
                     logger.warning('crawl driver get timed out on page: {}'.format(url))
                     continue
+                except UnexpectedAlertPresentException:
+                    logger.info('crawl alert on the page: {}'.format(url))
                 except:
                     logger.error('crawl error', exc_info=True)
                     continue
