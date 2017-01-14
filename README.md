@@ -19,5 +19,5 @@ __exclude all links which text starts with The__
 * --browser Chrome-Headless :Chrome headless
 * --follow 0 :scrape only links from cnn.com and don't follow links
 ```
-python run_scraper.py --exclude-regex ^The --site-url cnn.com --browser Chrome-Headless --follow 0  
+python run_scraper.py --exclude-regex ^The --site-url cnn.com --browser Chrome-Headless --follow 0
 ```

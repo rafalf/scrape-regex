@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
@@ -60,7 +62,6 @@ class Scrape:
             self.driver = webdriver.Chrome()
             self.driver.get(self.site_url)
 
-
     def scrape(self):
 
         try:
@@ -84,7 +85,14 @@ class Scrape:
         for page in temp:
             url = page[1]
             if self.driver:
-                self.driver.get(url)
+                try:
+                    self.driver.get(url)
+                except TimeoutException:
+                    logging.warning('crawl driver get timed out on page: {}'.format(url))
+                    continue
+                except:
+                    logger.error('crawl error', exc_info=True)
+                    continue
             self.site_url = url
             self.scrape()
 
