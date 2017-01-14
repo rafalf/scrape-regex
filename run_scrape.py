@@ -4,6 +4,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from pyvirtualdisplay import Display
 import logging
 import os
 import time
@@ -48,10 +49,17 @@ class Scrape:
         csv_file = "{}.csv".format(time.strftime('%d%m%y%H%M', time.localtime()))
         self.csv_file = os.path.join(os.path.dirname(__file__), 'csv', csv_file)
         self.driver = None
+        self.display = None
 
         if browser_ == 'Chrome-OSX':
             self.driver = webdriver.Chrome()
             self.driver.get(self.site_url)
+        elif browser_ == 'Chrome-Headless':
+            self.display = Display(visible=0, size=(800, 600))
+            self.display.start()
+            self.driver = webdriver.Chrome()
+            self.driver.get(self.site_url)
+
 
     def scrape(self):
 
@@ -336,6 +344,8 @@ class Scrape:
     def tear_down(self):
         if self.driver:
             self.driver.quit()
+        if self.display:
+            self.display.stop()
 
     @staticmethod
     def _apply_lookahead(source_, ahead_word):
