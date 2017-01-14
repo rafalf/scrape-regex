@@ -93,6 +93,7 @@ class Scrape:
                     continue
                 except UnexpectedAlertPresentException:
                     logger.info('crawl alert on the page: {}'.format(url))
+                    continue
                 except:
                     logger.error('crawl error', exc_info=True)
                     continue
