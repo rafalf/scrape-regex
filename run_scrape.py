@@ -317,7 +317,7 @@ class Scrape:
         except StaleElementReferenceException:
             logger.warning('_grab_all_links element stale ... ')
         except TimeoutException:
-            logging.info('_grab_all_links timed out. no links on page.')
+            logger.info('_grab_all_links timed out. no links on page.')
         except:
             logger.error('_grab_all_links error', exc_info=True)
         finally:
