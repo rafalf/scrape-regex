@@ -5,6 +5,7 @@
 * sudo pip install lxml
 * sudo pip install beautifulsoup4
 * sudo pip install requests
+* sudo pip install argparse
 
 ## Run examples:
 
