@@ -34,11 +34,15 @@ again ALL links would be searched for the 'obama'
 * if we pass in the arg --retain-links-keys with trump and russia. we'll select only links which text match both words
 trump and russia
 
-__exclude links which contain either: trump or russia and the link text has the word Trudeau. Also the text link must have the word
+__exclude links which contain both: trump and russia and the link text has the word Trudeau. Also the text link must have the word
 'Jared'__
 * --browser Chrome-OSX :Chrome on Mac
 ```
 --browser Chrome-OSX --exclude-links-keys trump russia --site-url cnn.com --exclude-links-any-key Trudeau --unite --retain-links-any-key Jared
 ```
 
-
+__scrape all links on the page, exclude links which contain both trump or russia and saved them, get all these scraped links again and this time around exclude all links which contains either Trudeau or Movie__
+* --browser Chrome-OSX :Chrome on Mac
+```
+--browser Chrome-OSX --exclude-links-keys trump russia --site-url cnn.com --exclude-links-any-key Trudeau Movie
+```
