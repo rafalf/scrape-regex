@@ -11,7 +11,7 @@
 
 __retain only links which text starts with 'The'__
 * --browser Chrome-Headless :Chrome headless
-* --follow 1 :click upon the each scraped link and scrape again pages
+* --follow 1 :click upon each and every scraped link (with "the") from the cnn.com and once on the selected page, scrape again.
 ```
 --retain-regex ^The --site-url cnn.com --browser Chrome-Headless --follow 1
 ```
